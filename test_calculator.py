@@ -78,3 +78,4 @@ class TestPremiumSurcharge:
     def test_premium_surcharge_large_amount(self):
         """Premium surcharge works on large amounts."""
         assert apply_premium_surcharge(400, True) == pytest.approx(460.0)
+        
