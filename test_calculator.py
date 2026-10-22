@@ -1,13 +1,16 @@
 """Unit tests for calculator module."""
-
-"""Unit tests for calculator module."""
 import pytest
-from calculator import Calculator, apply_group_discount, apply_special_offer, apply_premium_surcharge
+from calculator import (
+    Calculator,
+    apply_group_discount,
+    apply_special_offer,
+    apply_premium_surcharge
+)
 
 
-@pytest.fixture
-def calc():
-    """Fixture que provee una instancia limpia de la calculadora en cada prueba."""
+@pytest.fixture(name="calc")
+def fixture_calc():
+    """Fixture que provee una instancia limpia de la calculadora."""
     return Calculator()
 
 

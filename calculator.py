@@ -8,6 +8,10 @@ class Calculator:
         """Add two numbers."""
         return a + b
 
+    def subtract(self, a: float, b: float) -> float:
+        """Subtract two numbers."""
+        return a - b
+
 
 def apply_group_discount(subtotal: float, members: int) -> float:
     """R4: Apply 10% discount with 2 or more members."""
