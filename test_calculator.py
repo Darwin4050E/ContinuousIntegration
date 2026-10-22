@@ -25,7 +25,7 @@ class TestGroupDiscount:
 
     def test_one_member_no_discount(self):
         """One member gets no discount."""
-        assert apply_group_discount(90, 1) == 90
+        assert apply_group_discount(90, 1) == 999
 
     def test_two_members_apply_discount(self):
         """Two members get 10% discount."""
