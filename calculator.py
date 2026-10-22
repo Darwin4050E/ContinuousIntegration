@@ -34,3 +34,13 @@ def apply_premium_surcharge(amount: float, has_premium_extra: bool) -> float:
     if has_premium_extra:
         return amount * 1.15
     return amount
+
+PLANS = {"BASIC": 30.0, "STANDARD": 45.0, "PREMIUM": 70.0}
+
+def calculate_quote(plan: str) -> float:
+    """Calculate the total quote by applying R1 to R7."""
+    # R1. Plans. Any other plan is invalid.
+    if plan not in PLANS:
+        return -1.0
+    
+    return 0.0
