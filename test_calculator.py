@@ -1,6 +1,7 @@
 import pytest
 from calculator import Calculator
 
+"""Tests unitarios para cada requerimiento."""
 
 @pytest.fixture
 def calc():

@@ -1,6 +1,11 @@
+"""Módulo para calcular la cuota de membresía del gym."""
+
 class Calculator:
+    """Clase para calcular el costo de una membresía basada en reglas."""
 
     def __init__(self):
+        """Constructor de la clase con los diccionarios de información de precios."""
+        
         self.plans = {
             "BASIC": 30.0,
             "STANDARD": 45.0,
@@ -16,9 +21,9 @@ class Calculator:
 
         self.premium_extras = ["SPA", "SPECIALIZED_PROGRAM"]
 
-    def calculate_quote(self, plan: str, extras: list, members: int) -> float:
+    def calculate_quote(self, plan: str) -> float:
+        """R1: Cuota calculada a partir del plan y validación de plan inválido."""
         
-        # R1. Plans
         if plan not in self.plans:
             return -1.0
 
