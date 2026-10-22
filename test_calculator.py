@@ -45,3 +45,14 @@ class TestSpecialOffer:
     def test_above_400_subtract_50(self):
         assert apply_special_offer(450) == pytest.approx(400.0)
 
+
+class TestPremiumSurcharge:
+
+    def test_no_premium_extra_no_surcharge(self):
+        assert apply_premium_surcharge(286, False) == pytest.approx(286.0)
+
+    def test_with_premium_extra_adds_15_percent(self):
+        assert apply_premium_surcharge(200, True) == pytest.approx(230.0)
+
+    def test_premium_surcharge_large_amount(self):
+        assert apply_premium_surcharge(400, True) == pytest.approx(460.0)

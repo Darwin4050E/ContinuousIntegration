@@ -20,3 +20,8 @@ def apply_special_offer(amount: float) -> float:
     return amount
 
 
+def apply_premium_surcharge(amount: float, has_premium_extra: bool) -> float:
+    """R6: Si hay al menos un extra premium, sumar 15%."""
+    if has_premium_extra:
+        return amount * 1.15
+    return amount
