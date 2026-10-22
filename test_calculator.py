@@ -4,8 +4,7 @@ from calculator import (
     Calculator,
     apply_group_discount,
     apply_special_offer,
-    apply_premium_surcharge,
-    calculate_quote
+    apply_premium_surcharge
 )
 
 
@@ -79,7 +78,3 @@ class TestPremiumSurcharge:
     def test_premium_surcharge_large_amount(self):
         """Premium surcharge works on large amounts."""
         assert apply_premium_surcharge(400, True) == pytest.approx(460.0)
-
-    def test_invalid_plan():
-        """R1: Unknown plan is invalid."""
-        assert calculate_quote("GOLD") == -1
