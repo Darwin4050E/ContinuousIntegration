@@ -10,4 +10,4 @@ def calc():
 
 def test_invalid_plan(calc):
     """R1: Test con plan inválido/desconocido."""
-    assert calc.calculate_quote("GOLD", [], 1) == -1
+    assert calc.calculate_quote("GOLD") == -1
