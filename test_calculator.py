@@ -27,3 +27,21 @@ class TestGroupDiscount:
     def test_boundary_exactly_two_members(self):
         assert apply_group_discount(100, 2) == pytest.approx(90.0)
 
+
+class TestSpecialOffer:
+
+    def test_below_200_no_discount(self):
+        assert apply_special_offer(81) == 81
+
+    def test_exactly_200_no_discount(self):
+        assert apply_special_offer(200) == 200
+
+    def test_above_200_subtract_20(self):
+        assert apply_special_offer(306) == pytest.approx(286.0)
+
+    def test_exactly_400_subtract_20(self):
+        assert apply_special_offer(400) == pytest.approx(380.0)
+
+    def test_above_400_subtract_50(self):
+        assert apply_special_offer(450) == pytest.approx(400.0)
+
