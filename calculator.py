@@ -23,6 +23,20 @@ class Calculator:
         """R1: Return the plan price, or None if the plan is invalid."""
         return self.PLANS.get(plan)
 
+    def get_extras_price(self, extras, plan):
+        """R2: Validate extras and return (total, has_premium) or None."""
+        total = 0
+        has_premium = False
+        for extra in extras or []:
+            if extra not in self.EXTRAS:
+                return None
+            price, is_premium = self.EXTRAS[extra]
+            total += price
+            has_premium = has_premium or is_premium
+        if has_premium and plan != "PREMIUM":
+            return None
+        return total, has_premium
+
     def apply_group_discount(self, subtotal: float, members: int) -> float:
         """R4: Apply 10% discount with 2 or more members."""
         if members >= 2:

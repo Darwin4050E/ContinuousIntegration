@@ -26,3 +26,32 @@ class TestPlans:
     def test_invalid(self):
         """Unknown plan returns None."""
         assert self.calc.get_plan_price("GOLD") is None
+
+class TestExtras:
+    """Tests for R2."""
+
+    def test_no_extras(self, calc):
+        """No extras yields zero cost and no premium flag."""
+        assert calc.get_extras_price([], "BASIC") == (0, False)
+
+    def test_one_non_premium(self, calc):
+        """A single non-premium extra costs 15 with no premium flag."""
+        assert calc.get_extras_price(["GROUP_CLASSES"], "BASIC") == (15, False)
+
+    def test_two_non_premium(self, calc):
+        """Two non-premium extras cost 40 with no premium flag."""
+        assert calc.get_extras_price(
+            ["GROUP_CLASSES", "PERSONAL_TRAINING"], "BASIC"
+        ) == (40, False)
+
+    def test_premium_with_premium_plan(self, calc):
+        """A premium extra on a PREMIUM plan costs 30 and flags premium."""
+        assert calc.get_extras_price(["SPA"], "PREMIUM") == (30, True)
+
+    def test_premium_with_basic_is_invalid(self, calc):
+        """A premium extra on a BASIC plan is invalid."""
+        assert calc.get_extras_price(["SPA"], "BASIC") is None
+
+    def test_unknown_extra_is_invalid(self, calc):
+        """An unknown extra is invalid."""
+        assert calc.get_extras_price(["YOGA"], "BASIC") is None
