@@ -73,6 +73,65 @@ class TestSubtotal:
         """Zero members is invalid."""
         assert calc.calculate_subtotal(30, 0, 0) is None
 
+class TestGroupDiscountMethod:
+    """R4 as a Calculator method."""
+
+    def test_one_member_no_discount(self, calc):
+        """One member does not get a discount."""
+        assert calc.apply_group_discount(90, 1) == 90
+
+    def test_two_members_apply_discount(self, calc):
+        """Two members get a 10% discount."""
+        assert calc.apply_group_discount(90, 2) == pytest.approx(81.0)
+
+    def test_three_members_apply_discount(self, calc):
+        """Three members get a 10% discount."""
+        assert calc.apply_group_discount(135, 3) == pytest.approx(121.5)
+
+    def test_boundary_exactly_two_members(self, calc):
+        """Two members at the boundary get a 10% discount."""
+        assert calc.apply_group_discount(100, 2) == pytest.approx(90.0)
+
+
+class TestSpecialOfferMethod:
+    """R5 as a Calculator method."""
+
+    def test_below_200_no_discount(self, calc):
+        """Amounts below 200 do not get a discount."""
+        assert calc.apply_special_offer(81) == 81
+
+    def test_exactly_200_no_discount(self, calc):
+        """200 is NOT > 200, so no discount."""
+        assert calc.apply_special_offer(200) == 200
+
+    def test_above_200_subtract_20(self, calc):
+        """Amounts above 200 get 20 subtracted."""
+        assert calc.apply_special_offer(306) == pytest.approx(286.0)
+
+    def test_exactly_400_subtract_20(self, calc):
+        """400 is NOT > 400, so subtract 20."""
+        assert calc.apply_special_offer(400) == pytest.approx(380.0)
+
+    def test_above_400_subtract_50(self, calc):
+        """Amounts above 400 get 50 subtracted."""
+        assert calc.apply_special_offer(450) == pytest.approx(400.0)
+
+
+class TestPremiumSurchargeMethod:
+    """R6 as a Calculator method."""
+
+    def test_no_premium_no_surcharge(self, calc):
+        """No premium extra does not add a surcharge."""
+        assert calc.apply_premium_surcharge(286, False) == pytest.approx(286.0)
+
+    def test_with_premium_adds_15_percent(self, calc):
+        """A premium extra adds a 15% surcharge."""
+        assert calc.apply_premium_surcharge(200, True) == pytest.approx(230.0)
+
+    def test_large_amount(self, calc):
+        """A large amount with premium extra adds 15%."""
+        assert calc.apply_premium_surcharge(400, True) == pytest.approx(460.0)
+
 class TestRounding:
     """Tests for R7."""
 
