@@ -37,6 +37,12 @@ class Calculator:
             return None
         return total, has_premium
 
+    def calculate_subtotal(self, plan_price, extras_price, members):
+        """R3: Subtotal = (plan + extras) * members or None if members are less than 1."""
+        if members < 1:
+            return None
+        return (plan_price + extras_price) * members
+
     def apply_group_discount(self, subtotal: float, members: int) -> float:
         """R4: Apply 10% discount with 2 or more members."""
         if members >= 2:

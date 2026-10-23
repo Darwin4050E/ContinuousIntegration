@@ -55,3 +55,18 @@ class TestExtras:
     def test_unknown_extra_is_invalid(self, calc):
         """An unknown extra is invalid."""
         assert calc.get_extras_price(["YOGA"], "BASIC") is None
+
+class TestSubtotal:
+    """Tests for R3."""
+
+    def test_single_member(self, calc):
+        """One member with BASIC plan and no extras costs 30."""
+        assert calc.calculate_subtotal(30, 0, 1) == 30
+
+    def test_multiple_members(self, calc):
+        """Three members with BASIC plan and one extra costs 135."""
+        assert calc.calculate_subtotal(30, 15, 3) == 135
+
+    def test_zero_members_invalid(self, calc):
+        """Zero members is invalid."""
+        assert calc.calculate_subtotal(30, 0, 0) is None
