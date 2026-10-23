@@ -26,4 +26,3 @@ class TestPlans:
     def test_invalid(self):
         """Unknown plan returns None."""
         assert self.calc.get_plan_price("GOLD") is None
-        
