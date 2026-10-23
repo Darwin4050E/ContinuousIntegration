@@ -1,6 +1,9 @@
 """Module for gym membership quote calculations."""
 
 
+from decimal import ROUND_HALF_UP, Decimal
+
+
 class Calculator:
     """Gym membership quote calculator."""
 
@@ -64,3 +67,9 @@ class Calculator:
         if has_premium_extra:
             return amount * 1.15
         return amount
+
+    def round_half_up(self, amount: float) -> int:
+        """R7: Round half up to a whole number."""
+        return int(
+            Decimal(str(amount)).quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+        )
