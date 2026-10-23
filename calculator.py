@@ -1,35 +1,36 @@
-"""Módulo para calcular la cuota de membresía del gym."""
+"""Module for gym membership quote calculations."""
 
 
 class Calculator:
-    """Clase para calcular el costo de una membresía basada en reglas."""
+    """Basic calculator class."""
 
-    def __init__(self):
-        """Constructor de la clase con los diccionarios de información de precios."""
-        self.plans = {
-            "BASIC": 30.0,
-            "STANDARD": 45.0,
-            "PREMIUM": 70.0
-        }
+    def add(self, a: float, b: float) -> float:
+        """Add two numbers."""
+        return a + b
 
-        self.extras_prices = {
-            "GROUP_CLASSES": 15.0,
-            "PERSONAL_TRAINING": 25.0,
-            "SPA": 30.0,
-            "SPECIALIZED_PROGRAM": 40.0
-        }
+    def subtract(self, a: float, b: float) -> float:
+        """Subtract two numbers."""
+        return a - b
 
-        self.premium_extras = ["SPA", "SPECIALIZED_PROGRAM"]
 
-    def get_available_plans(self) -> list:
-        """Retorna la lista de planes disponibles (útil para el menú)."""
-        return list(self.plans.keys())
+def apply_group_discount(subtotal: float, members: int) -> float:
+    """R4: Apply 10% discount with 2 or more members."""
+    if members >= 2:
+        return subtotal * 0.9
+    return subtotal
 
-    def calculate_quote(self, plan: str) -> float:
-        """R1: Cuota calculada a partir del plan y validación de plan inválido."""
-        if plan not in self.plans:
-            return -1.0
 
-        plan_price = self.plans[plan]
+def apply_special_offer(amount: float) -> float:
+    """R5: Subtract 50 if > 400, subtract 20 if > 200."""
+    if amount > 400:
+        return amount - 50
+    if amount > 200:
+        return amount - 20
+    return amount
 
-        return float(plan_price)
+
+def apply_premium_surcharge(amount: float, has_premium_extra: bool) -> float:
+    """R6: Add 15% surcharge if premium extra is selected."""
+    if has_premium_extra:
+        return amount * 1.15
+    return amount
