@@ -5,6 +5,8 @@ from calculator import Calculator
 class TestPlans:
     """Tests for R1 plan catalog."""
 
+    calc: Calculator
+
     def setup_method(self):
         """Provide a clean Calculator instance for each test."""
         self.calc = Calculator()
@@ -24,3 +26,4 @@ class TestPlans:
     def test_invalid(self):
         """Unknown plan returns None."""
         assert self.calc.get_plan_price("GOLD") is None
+        
