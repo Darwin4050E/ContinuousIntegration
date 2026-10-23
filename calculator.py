@@ -1,36 +1,75 @@
 """Module for gym membership quote calculations."""
 
 
+from decimal import ROUND_HALF_UP, Decimal
+
+
 class Calculator:
-    """Basic calculator class."""
+    """Gym membership quote calculator."""
 
-    def add(self, a: float, b: float) -> float:
-        """Add two numbers."""
-        return a + b
+    # R1: plan catalog
+    PLANS = {
+        "BASIC": 30,
+        "STANDARD": 45,
+        "PREMIUM": 70,
+    }
 
-    def subtract(self, a: float, b: float) -> float:
-        """Subtract two numbers."""
-        return a - b
+    # R2: extras catalog
+    EXTRAS = {
+        "GROUP_CLASSES": (15, False),
+        "PERSONAL_TRAINING": (25, False),
+        "SPA": (30, True),
+        "SPECIALIZED_PROGRAM": (40, True),
+    }
+
+    def get_plan_price(self, plan: str):
+        """R1: Return the plan price, or None if the plan is invalid."""
+        return self.PLANS.get(plan)
+
+    def get_extras_price(self, extras, plan):
+        """R2: Validate extras and return (total, has_premium) or None."""
+        total = 0
+        has_premium = False
+        for extra in extras or []:
+            if extra not in self.EXTRAS:
+                return None
+            price, is_premium = self.EXTRAS[extra]
+            total += price
+            has_premium = has_premium or is_premium
+        if has_premium and plan != "PREMIUM":
+            return None
+        return total, has_premium
+
+    def calculate_subtotal(self, plan_price, extras_price, members):
+        """R3: Subtotal = (plan + extras) * members or None if members are less than 1."""
+        if members < 1:
+            return None
+        return (plan_price + extras_price) * members
+
+    def apply_group_discount(self, subtotal: float, members: int) -> float:
+        """R4: Apply 10% discount with 2 or more members."""
+        if members >= 2:
+            return subtotal * 0.9
+        return subtotal
 
 
-def apply_group_discount(subtotal: float, members: int) -> float:
-    """R4: Apply 10% discount with 2 or more members."""
-    if members >= 2:
-        return subtotal * 0.9
-    return subtotal
+    def apply_special_offer(self, amount: float) -> float:
+        """R5: Subtract 50 if > 400, subtract 20 if > 200."""
+        if amount > 400:
+            return amount - 50
+        if amount > 200:
+            return amount - 20
+        return amount
 
 
-def apply_special_offer(amount: float) -> float:
-    """R5: Subtract 50 if > 400, subtract 20 if > 200."""
-    if amount > 400:
-        return amount - 50
-    if amount > 200:
-        return amount - 20
-    return amount
+    def apply_premium_surcharge(self, amount: float, has_premium_extra: bool) -> float:
+        """R6: Add 15% surcharge if premium extra is selected."""
+        if has_premium_extra:
+            return amount * 1.15
+        return amount
 
-
-def apply_premium_surcharge(amount: float, has_premium_extra: bool) -> float:
-    """R6: Add 15% surcharge if premium extra is selected."""
-    if has_premium_extra:
-        return amount * 1.15
-    return amount
+    def round_half_up(self, amount: float) -> int:
+        """R7: Round half up to a whole number."""
+        return int(
+            Decimal(str(amount)).quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+        )
